@@ -43,3 +43,39 @@ def build_scorecard(
         scorecard_list.append(temp_table[["feature", "bin", "woe", "puntos"]])
         
     return pd.concat(scorecard_list, ignore_index=True)
+
+def calcular_gini(auc_score):
+    """Calcula el coeficiente de Gini a partir del AUC."""
+    return 2 * auc_score - 1
+
+import numpy as np
+
+# Configuración de la escala (Ejemplo: Score de 300 a 850)
+def transformar_a_score(prob, target_score=600, target_odds=50, pdo=20):
+    factor = pdo / np.log(2)
+    offset = target_score - (factor * np.log(target_odds))
+    
+    # Calculamos el log-odds (evitando división por cero)
+    odds = (1 - prob) / (prob + 1e-10)
+    score = offset + (factor * np.log(odds))
+    return np.clip(score, 0, 1000) # Limitamos entre 0 y 1000
+
+# Aplicar al set de prueba con el modelo campeón (Random Forest)
+probs_test = models["Random Forest"].predict_proba(X_test_woe)[:, 1]
+scores_test = [transformar_a_score(p) for p in probs_test]
+
+print(f"Gini del Modelo: {calcular_gini(0.7838):.4f}")
+print(f"Score Promedio: {np.mean(scores_test):.0f} puntos")
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(10, 6))
+sns.histplot(scores_test, bins=50, kde=True, color='teal')
+plt.axvline(np.mean(scores_test), color='red', linestyle='--', label=f'Media: {np.mean(scores_test):.0f}')
+plt.title("Distribución de Scores Bancarios (Set de Prueba)")
+plt.xlabel("Score (0 = Riesgo Máximo, 1000 = Cliente Ideal)")
+plt.ylabel("Frecuencia de Clientes")
+plt.legend()
+plt.show()
+
