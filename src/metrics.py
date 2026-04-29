@@ -60,22 +60,3 @@ def transformar_a_score(prob, target_score=600, target_odds=50, pdo=20):
     score = offset + (factor * np.log(odds))
     return np.clip(score, 0, 1000) # Limitamos entre 0 y 1000
 
-# Aplicar al set de prueba con el modelo campeón (Random Forest)
-probs_test = models["Random Forest"].predict_proba(X_test_woe)[:, 1]
-scores_test = [transformar_a_score(p) for p in probs_test]
-
-print(f"Gini del Modelo: {calcular_gini(0.7838):.4f}")
-print(f"Score Promedio: {np.mean(scores_test):.0f} puntos")
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-plt.figure(figsize=(10, 6))
-sns.histplot(scores_test, bins=50, kde=True, color='teal')
-plt.axvline(np.mean(scores_test), color='red', linestyle='--', label=f'Media: {np.mean(scores_test):.0f}')
-plt.title("Distribución de Scores Bancarios (Set de Prueba)")
-plt.xlabel("Score (0 = Riesgo Máximo, 1000 = Cliente Ideal)")
-plt.ylabel("Frecuencia de Clientes")
-plt.legend()
-plt.show()
-
