@@ -1,0 +1,15 @@
+[project]
+name = "credit-scoring-alvear"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ipywidgets>=8.1.8",
+    "pandas>=2.3.3",
+    "scikit-learn>=1.8.0",
+    "setuptools>=82.0.1",
+    "wheel>=0.47.0",
+    "xgboost>=3.2.0",
+    "ydata-profiling>=4.18.4",
+]
