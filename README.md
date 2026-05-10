@@ -28,7 +28,15 @@ Se evaluaron múltiples algoritmos bajo las mismas condiciones de entrenamiento 
 
 El modelo **Random Forest** fue seleccionado por presentar la mejor capacidad de discriminación. El modelo final y sus metadatos están guardados en la carpeta `models/baseline_v1/`.
 
-## 🚀 4. Reproducción del Ambiente (uv)
+## 🧪 4. Actividades de Machine Learning
+El proyecto integra notebooks prácticos del curso para conectar teoría, experimentación y buenas prácticas de validación:
+
+* `notebooks/01_credit_scoring.ipynb`: Desarrollo principal del modelo de credit scoring, análisis exploratorio, ingeniería de variables y comparación de modelos.
+* `notebooks/02_validation_ts.ipynb`: Actividad de validación en series temporales, con foco en leakage temporal, validación out-of-time, walk-forward validation y nested cross-validation temporal.
+
+Estas actividades refuerzan el uso de particiones de datos consistentes con problemas financieros, evitando evaluar modelos con información futura no disponible al momento de la decisión.
+
+## 🚀 5. Reproducción del Ambiente (uv)
 Para garantizar que el código funcione exactamente igual en cualquier máquina, se utiliza el gestor de paquetes **uv**.
 
 1. **Clonar el repositorio:**
